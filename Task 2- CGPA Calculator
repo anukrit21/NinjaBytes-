@@ -1,0 +1,63 @@
+import java.util.Scanner;
+
+ class CGPACalculator {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int numberOfCourses = 0;
+        boolean validInput = false;
+
+        while (!validInput) {
+            try {
+                System.out.print("Enter the number of courses: ");
+                numberOfCourses = scanner.nextInt();
+                validInput = true;
+            } catch (java.util.InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a valid integer.");
+                scanner.nextLine(); // Clear the input buffer
+            }
+        }
+
+        double totalCreditHours = 0;
+        double totalGradePoints = 0;
+
+        for (int i = 1; i <= numberOfCourses; i++) {
+            System.out.print("Enter the credit hours for course " + i + ": ");
+            double creditHours = scanner.nextDouble();
+
+            System.out.print("Enter the grade for course " + i + " (A, B, C, D, F): ");
+            String grade = scanner.next().toUpperCase();
+
+            double gradePoints = 0;
+
+            switch (grade) {
+                case "A":
+                    gradePoints = 4.0;
+                    break;
+                case "B":
+                    gradePoints = 3.0;
+                    break;
+                case "C":
+                    gradePoints = 2.0;
+                    break;
+                case "D":
+                    gradePoints = 1.0;
+                    break;
+                case "F":
+                    gradePoints = 0.0;
+                    break;
+                default:
+                    System.out.println("Invalid grade entered. Please enter A, B, C, D, or F.");
+                    i--; // Decrement i to allow the user to re-enter the grade for this course.
+                    continue; // Go to the next iteration of the loop.
+            }
+
+            totalCreditHours += creditHours;
+            totalGradePoints += gradePoints * creditHours;
+        }
+
+        double cgpa = totalGradePoints / totalCreditHours;
+
+        System.out.println("CGPA: " + cgpa);
+    }
+}
